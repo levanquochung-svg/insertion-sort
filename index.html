@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insertion Sort Visualizer</title>
+
+<style>
+body{
+background:#2f3640;
+color:white;
+text-align:center;
+font-family:Arial;
+}
+
+#array{
+display:flex;
+align-items:flex-end;
+justify-content:center;
+height:400px;
+margin-top:40px;
+}
+
+.bar{
+width:20px;
+margin:3px;
+background:#00a8ff;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Insertion Sort Visualization</h1>
+
+<button onclick="generate()">Random</button>
+<button onclick="insertionSort()">Start</button>
+
+<div id="array"></div>
+
+<script>
+
+let arr=[]
+
+function generate(){
+
+arr=[]
+let container=document.getElementById("array")
+container.innerHTML=""
+
+for(let i=0;i<30;i++){
+
+let value=Math.floor(Math.random()*300)+20
+arr.push(value)
+
+let bar=document.createElement("div")
+bar.classList.add("bar")
+bar.style.height=value+"px"
+
+container.appendChild(bar)
+}
+}
+
+function sleep(ms){
+return new Promise(resolve=>setTimeout(resolve,ms))
+}
+
+async function insertionSort(){
+
+let bars=document.getElementsByClassName("bar")
+
+for(let i=1;i<arr.length;i++){
+
+let key=arr[i]
+let j=i-1
+
+bars[i].style.background="red"
+
+await sleep(100)
+
+while(j>=0 && arr[j]>key){
+
+arr[j+1]=arr[j]
+bars[j+1].style.height=bars[j].style.height
+
+j--
+
+await sleep(100)
+}
+
+arr[j+1]=key
+bars[j+1].style.height=key+"px"
+
+bars[i].style.background="#00a8ff"
+}
+}
+
+generate()
+
+</script>
+
+</body>
+</html>
